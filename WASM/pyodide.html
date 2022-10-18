@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
+    <script type="text/javascript">
+      async function main() {
+        
+        let pyodide = await loadPyodide();
+        // cargar paquetes
+        await pyodide.loadPackage("micropip");
+        const micropip = pyodide.pyimport("micropip");
+        
+        await micropip.install("numpy");
+        await micropip.install("nltk");
+        await pyodide.runPython(`
+        import numpy as np
+        #import nltk
+        #nltk.download('stopwords')
+        #from nltk.corpus import stopwords
+
+        oracion="for the last 8 years of his life galileo was under house arrest for espousing this mans theory"
+        oracion=oracion.lower().split(" ")
+        print(len(oracion))
+
+        #stop_words=set(stopwords.words('english'))
+        stop_words={"you'd", 'herself', 'an', 'at', 'there', 'does', 'up', 'once', 'before', 'of', 'these', 'are', 'i', "aren't", 'your', 'a', 'needn', 'them', "should've", "wasn't", 'y', 'they', 'on', 'their', 'between', 'now', 'couldn', 'who', 'to', "doesn't", 'been', 'into', 'out', 'ours', 'further', 'll', "you're", "shouldn't", 'hasn', "won't", 'o', 're', 'nor', 'here', 'how', "haven't", 'shan', 'did', 'himself', 'ain', 'weren', 'me', "don't", 'isn', "mightn't", 'each', 'themselves', 'my', 'below', "hadn't", "you've", 'yours', 'because', 'but', 'all', 'so', 'which', 'when', 'being', 'ma', "couldn't", 'whom', 'any', 'will', 'just', "needn't", 'can', 'few', 'be', 'this', 'for', 't', 'that', 'didn', 'shouldn', 'against', 'mustn', 'again', 'wasn', 'myself', 'over', "weren't", 'same', "hasn't", 'what', 'through', 'while', 'were', 'he', 'hadn', 'then', 'd', 'why', 'above', 'if', "she's", 'we', 'more', 
+        'in', 'other', "you'll", 'by', 'with', 'its', "it's", 'had', 'those', 'about', 'aren', 'off', 'should', 'yourself', 'down', 'until', 'hers', 'haven', "wouldn't", "didn't", 'she', 'from', 'wouldn', 'm', 'it', 'not', 'doesn', 's', 'was', "isn't", 'do', 've', 'don', 'having', 'after', 'such', 'some', 'doing', 'her', 'him', 'won', 'and', 'both', 'his', 'too', "shan't", "mustn't", 'our', 'own', 'most', 'during', 'itself', 'only', 'have', 'mightn', 
+        'is', "that'll", 'no', 'am', 'as', 'than', 'has', 'where', 'you', 'under', 'the', 'very', 'ourselves', 'yourselves', 'or', 'theirs'}
+        #print(stop_words)
+        limpio=[i for i in oracion if not i.lower() in stop_words]
+        print(len(oracion))
+        
+        print(np.ones((3,3)))
+
+      `);
+      }
+      main();
+    </script>
+  </body>
+</html>
+
+<!-- from  import *
+from nltk.corpus import stopwords
+import json -->
